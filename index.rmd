@@ -1,0 +1,149 @@
+---
+title: "Reforma de datos"
+author: "Carlos Ivan Espinosa"
+date: "7 de mayo de 2019"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    highlight: haddock
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+---
+
+<p> <br> </p>
+
+Pueden descargar este documento en pdf haciendo clic [aquí](https://github.com/Ciespinosa/ReformaDatos/blob/master/index.pdf)
+
+#Prologo
+
+Una de las principales preocupaciones de los investigadores durante los últimos años es como poder preservar los datos. Aunque algunos sistemas de procesamiento de datos como excel ofrece unas interesantes herramientas, uno de los principales problemas que tiene excel es la deficiente trazabilidad (el no saber todos los procesos que se siguieron para obtener los datos) que ofrece. Esto es un grave problema ya que atenta justamente con la preservación de los datos. 
+
+De esta forma podemos utilizar excel o cualquier otro software para sistematizar y almacenar los datos brutos, pero el procesamiento de datos debería hacérselo en sistemas que permitan mantener la trazabilidad. `R` ofrece una interesante oportunidad ya que permite mantener una alta trazabilidad y reducir la generación de archivos intermedios.
+
+En el presente documento intentaremos dar unos primeros consejos sobre la reforma de datos, como a partir de datos brutos se puede reformar los datos para desarrollar análisis.
+
+# Reforma de datos
+
+Nos referimos a reformar o manipular datos cuando generamos procesos de reestructuración. Muchas veces los datos brutos están en formatos conocidos como __datos de formato largos__ y lo que nosotros necesitamos es obtener __datos de formato ancho__.
+
+```{r, echo=FALSE, message=FALSE}
+library(readxl)
+library(reshape2)
+
+dta <- read_excel("REA.datos.xlsx")
+
+S1 <- subset(dta[,c(1,4:6,9,10,11)], dta$parcela=="S1")
+knitr::kable(S1[1:10,], caption= "Ejemplo de datos de formato largo (long data)")
+```
+
+Los datos de formato largo tienen una columna para los posibles tipos de variables y una columna para los valores de esas variables, en el caso del ejemplo tenemos varias especies con datos para cada una de esas especies. Los datos de formato largo no son necesariamente solo dos columnas y pueden tener múltiples variables, como en el caso del ejemplo. Sin embargo, si por ejemplo con estos datos necesito desarrollar un estudio de comunidad, me interesa que la variable __especies__, se convierta en varias variables, tantas como especies hay. De esta manera, necesitamos transformar el formato largo a un formato ancho como en la siguiente tabla.
+
+```{r, echo=FALSE, message=FALSE}
+S1T <- dcast(S1, subparcela~especie)
+knitr::kable(S1T[1:10,1:7], caption= "Ejemplo de datos con formato ancho (wide data)")
+
+```
+
+Como vemos tenemos unos casos que se denominan subparcela, y unas variables que son las especies.
+
+A continuación, vamos a mostrar cómo realizar los cambios de formatos largos a anchos.
+ 
+## Datos de formato largo a formato ancho
+
+Para este poder reformar los datos vamos a utilizar el paquete `reshape2`, este paquete tiene varias funciones que permiten reformar los datos.
+
+El cambio de formato largo a ancho lo realizaremos a través de la función __dcast()__. Esta función está compuesta por varios argumentos que se debe proveer para realizar la reforma de los datos; _dcast(datos, fórmula, variable de valor)_
+
+El primer argumento _datos_ se refiere a la matriz que voy a reformar. El segundo argumento es una explicación de cómo quiero transformar los datos, en el caso del ejemplo quiero poner como casos las subparcelas y como variables las especies, así la formula sería _subparcelas~especies_, la _variable valor_ es optativa, y se refiere a los datos que quiero que se muestren en la tabla ancha. Si no incluyo esa variable, los valores que asoman en cada caso corresponderán a la frecuencia de esa variable. 
+
+```{r}
+
+library(readxl)
+library(reshape2)
+
+dta <- read_excel("REA.datos.xlsx")
+
+```
+
+Cargamos los datos, estos datos corresponden a una parcela permanente de bosque seco. Puede revisar la estructura de esta matriz de datos. Ahora bien, queremos transformar estos datos a datos con formato ancho, manteniendo las variables de diseño (parcela y subparcela) y tener como variables a las diferentes especies.
+
+```{r, message=FALSE}
+dtaT <- dcast(dta, parcela+subparcela~especie)
+knitr::kable(dtaT[1:10,1:7], caption= "Subconjunto de los datos con formato ancho de frecuencia")
+```
+
+Como vemos ahora tenemos las variables de diseño frente a las variables especie, como datos aparece la frecuencia en la que cada especie aparece en la subparcela, puede ver la matriz completa usando la función __view(dtaT)__
+
+Bien ahora es posible que me interese medir la ocurrencia de las especies como un valor de biomasa, puesto que tengo un valor de área basal usaré esta medida como indicador de biomasa.
+
+```{r, message=FALSE}
+dtaTab <- dcast(dta, parcela+subparcela~especie, value.var = "area.basal", fun.aggregate = sum)
+knitr::kable(dtaTab[1:10,1:7], caption= "Subconjunto de los datos con formato ancho de biomasa")
+```
+
+En este caso la matriz resultante tiene datos de la suma del área basal. A diferencia del primer código, en esta ocasión hemos incrementado dos argumentos; _value.var_ (variable de valor) que corresponde a la variable que debería poner en la matriz y _fun.aggregate_ que corresponde a la función que `R` usa para agregar (juntar) los datos, en este caso la suma. Podríamos usar otras medidas como la media, esto dependerá del uso que le quiera dar a los datos y de la interpretación biológica.
+
+## Datos de formato ancho a formato largo
+
+Bien ahora vamos a ver un ejemplo opuesto, donde tenemos datos disgregados como varias variables y realmente queremos que sea una sola variable. En este caso usaremos la función __melt()__. Esta función está compuesta por al menos dos argumentos; __melt(datos, id.vars)__. Id.vars se refiere a las variables que deseo se mantengan en formato largo.
+
+```{r, message=FALSE}
+
+dtaL <- melt(dtaT, id.vars=c("parcela", "subparcela"),       
+             variable.name = "especie",
+             value.name ="frecuencia")
+
+knitr::kable(dtaL[1:6,], caption= "Subconjunto de los datos con formato largo de frecuencia")
+
+```
+
+Como vemos ahora especies volvió a ser una sola variable, aunque no podemos recuperar el formato inicial debido a que los casos en este caso están a nivel de subparcela.
+
+##Agregación de datos
+
+La agregación de los datos nos permite colapsar los datos en unidades superiores, así, por ejemplo, podríamos colapsar los datos que tenemos a nivel de subparcelas a nivel de parcelas, en otras palabras, dejar como casos las parcelas y no las subparcelas.  Para realizar la agregación usaremos la función __aggregate()__ la cual necesita al menos tres argumentos. __aggregate(datos, list(agregación), función de agregación)__.
+
+Usaremos nuestra matriz en formato ancho de frecuencia para colapsar los datos a nivel de parcela.
+
+```{r, message=FALSE}
+
+dtaA <- aggregate(dtaT[,-(1:2)], list(par=dtaT$parcela), sum)
+
+knitr::kable(dtaA[,1:7], caption= "Subconjunto de los datos agregados a parcela")
+
+```
+
+En el ejemplo, queremos agregar los datos de especies, sin embargo, la 1era y 2da variables no son especies por lo que las excluyo de los datos (dtaT[,-(1:2)]), uso una lista del vector _parcela_ a la cual le he asignado el nombre _par_ (list(par=dtaT$parcela)), finalmente le he dicho que para realizar el colapso a nivel de parcela haga una suma de los elementos de la subparcela.
+
+Ahora podríamos necesitar hacer agregaciones, pero bajo una estructura un poco más compleja. Vamos a usar los datos brutos (dta) para colapsar los datos a nivel de subparcela.
+
+```{r, message=FALSE}
+
+dtaA2 <- aggregate(dta[, c("area.basal","dap.a", "no.fustes")], 
+                   list(par=dta$parcela, 
+                        subpar=dta$subparcela,
+                        especie=dta$especie),
+                   sum)
+
+knitr::kable(dtaA2[1:7,], caption= "Subconjunto de los datos agregados a parcela/subparcela/especie")
+
+```
+
+Lo que en este ejemplo hemos hecho es colapsar los datos de área basal, dap y número de fustes a nivel de especies, por subparcela y por parcela. Hemos usado la función _sum_ para colapsar los datos. El cambio implica que antes tenía los datos a nivel de individuo y ahora los tengo a nivel de especie.
+
+#Ejercicios
+
+Con los datos de amebiasis reportados en la provincia de Loja que puede descargar haciendo clic [aquí](https://github.com/Ciespinosa/ReformaDatos/blob/master/AMEBIASIS_LOJA.xlsx), reforme de la siguiente manera los datos:
+
+1. Genere un nuevo vector categórico que corresponda con la edad de los afectados. Así tendremos las siguientes categorías; infantes de 1 a 5 años, jóvenes de 5 a 18 años, adultos de 18 a 65 años y mayores a personas mayores a 65 años.
+
+2. Obtenga dos matrices. La primera matriz debería contener la frecuencia de afectación a nivel de categoría de edad y Parroquia. La segunda matriz frecuencia de afectación a nivel de género y parroquia.
+
+3. Obtenga dos matrices la primera transforme de datos con formato largo a formato ancho usando el género como variable a disgregar y la segunda matriz con la categoría de edad como variable a disgregar obtenga la frecuencia de ocurrencia de la amebiasis. Mantenga los datos a nivel de parroquia.
+
+
+
+
+
