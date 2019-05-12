@@ -3,12 +3,12 @@ title: "Reforma de datos"
 author: "Carlos Ivan Espinosa"
 date: "7 de mayo de 2019"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     highlight: haddock
     number_sections: yes
     theme: cosmo
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
@@ -16,17 +16,16 @@ output:
 
 Pueden descargar este documento en pdf haciendo clic [aquí](https://github.com/Ciespinosa/ReformaDatos/blob/master/index.pdf)
 
-#Prologo
+#Prólogo
 
-Una de las principales preocupaciones de los investigadores durante los últimos años es como poder preservar los datos. Aunque algunos sistemas de procesamiento de datos como excel ofrece unas interesantes herramientas, uno de los principales problemas que tiene excel es la deficiente trazabilidad (el no saber todos los procesos que se siguieron para obtener los datos) que ofrece. Esto es un grave problema ya que atenta justamente con la preservación de los datos. 
+Una de las principales preocupaciones de los investigadores durante los últimos años es como poder preservar los datos. Aunque algunos sistemas de procesamiento de datos como Excel, ofrece unas interesantes herramientas, uno de los principales problemas que tiene excel es la deficiente trazabilidad que ofrece. Nos referimos a trazabilidad, como el conocer o tener evidencias de cuales fueron los pasos que se siguieron para los datos. Esto es un grave problema, ya que atenta con la preservación de los datos. 
 
-De esta forma podemos utilizar excel o cualquier otro software para sistematizar y almacenar los datos brutos, pero el procesamiento de datos debería hacérselo en sistemas que permitan mantener la trazabilidad. `R` ofrece una interesante oportunidad ya que permite mantener una alta trazabilidad y reducir la generación de archivos intermedios.
+De esta forma podemos utilizar excel o cualquier otro software para sistematizar y almacenar los datos brutos, pero el procesamiento de datos debería hacérselo en sistemas que permitan mantener la trazabilidad. `R` ofrece una interesante oportunidad, ya que permite mantener una alta trazabilidad y reducir la generación de archivos intermedios.
 
-En el presente documento intentaremos dar unos primeros consejos sobre la reforma de datos, como a partir de datos brutos se puede reformar los datos para desarrollar análisis.
+En el presente documento intentaremos dar unos primeros consejos sobre la reforma de datos, como, a partir de datos brutos, se puede reformar los datos para desarrollar análisis.
 
-# Reforma de datos
 
-Nos referimos a reformar o manipular datos cuando generamos procesos de reestructuración. Muchas veces los datos brutos están en formatos conocidos como __datos de formato largos__ y lo que nosotros necesitamos es obtener __datos de formato ancho__.
+Nos referimos a reformar o manipular datos cuando generamos procesos de reestructuración de las matrices de datos. Los datos deben ser almacenados normalmente a nivel de observaciones, estos se conocen como datos brutos. Muchas veces los datos brutos se encuentran en formatos conocidos como __datos de formato largo__, y lo que nosotros necesitamos es transformar a __datos de formato ancho__, este proceso nos permite disgregar variables. 
 
 ```{r, echo=FALSE, message=FALSE}
 library(readxl)
@@ -38,11 +37,11 @@ S1 <- subset(dta[,c(1,4:6,9,10,11)], dta$parcela=="S1")
 knitr::kable(S1[1:10,], caption= "Ejemplo de datos de formato largo (long data)")
 ```
 
-Los datos de formato largo tienen una columna para los posibles tipos de variables y una columna para los valores de esas variables, en el caso del ejemplo tenemos varias especies con datos para cada una de esas especies. Los datos de formato largo no son necesariamente solo dos columnas y pueden tener múltiples variables, como en el caso del ejemplo. Sin embargo, si por ejemplo con estos datos necesito desarrollar un estudio de comunidad, me interesa que la variable __especies__, se convierta en varias variables, tantas como especies hay. De esta manera, necesitamos transformar el formato largo a un formato ancho como en la siguiente tabla.
+Los datos de formato largo tienen una columna para los posibles tipos de variables y una columna para los valores de esas variables, en el caso del ejemplo tenemos varias especies con datos para cada una de esas especies. Los datos de formato largo no son necesariamente solo dos columnas y pueden tener múltiples variables, como en el caso del ejemplo. Sin embargo, si con estos datos necesito desarrollar un estudio de comunidad, me interesa que la variable __especies__, se convierta en varias variables, tantas como especies hay. De esta manera, necesitamos transformar el formato largo a un formato ancho como en la siguiente tabla.
 
 ```{r, echo=FALSE, message=FALSE}
 S1T <- dcast(S1, subparcela~especie)
-knitr::kable(S1T[1:10,1:7], caption= "Ejemplo de datos con formato ancho (wide data)")
+knitr::kable(S1T[1:10,1:5], caption= "Ejemplo de datos con formato ancho (wide data)")
 
 ```
 
@@ -71,7 +70,8 @@ Cargamos los datos, estos datos corresponden a una parcela permanente de bosque 
 
 ```{r, message=FALSE}
 dtaT <- dcast(dta, parcela+subparcela~especie)
-knitr::kable(dtaT[1:10,1:7], caption= "Subconjunto de los datos con formato ancho de frecuencia")
+knitr::kable(dtaT[1:10,1:5], caption= "Subconjunto de los datos 
+             con formato ancho de frecuencia")
 ```
 
 Como vemos ahora tenemos las variables de diseño frente a las variables especie, como datos aparece la frecuencia en la que cada especie aparece en la subparcela, puede ver la matriz completa usando la función __view(dtaT)__
@@ -80,7 +80,8 @@ Bien ahora es posible que me interese medir la ocurrencia de las especies como u
 
 ```{r, message=FALSE}
 dtaTab <- dcast(dta, parcela+subparcela~especie, value.var = "area.basal", fun.aggregate = sum)
-knitr::kable(dtaTab[1:10,1:7], caption= "Subconjunto de los datos con formato ancho de biomasa")
+knitr::kable(dtaTab[1:10,1:5], caption= "Subconjunto de los datos 
+             con formato ancho de biomasa")
 ```
 
 En este caso la matriz resultante tiene datos de la suma del área basal. A diferencia del primer código, en esta ocasión hemos incrementado dos argumentos; _value.var_ (variable de valor) que corresponde a la variable que debería poner en la matriz y _fun.aggregate_ que corresponde a la función que `R` usa para agregar (juntar) los datos, en este caso la suma. Podríamos usar otras medidas como la media, esto dependerá del uso que le quiera dar a los datos y de la interpretación biológica.
@@ -95,7 +96,8 @@ dtaL <- melt(dtaT, id.vars=c("parcela", "subparcela"),
              variable.name = "especie",
              value.name ="frecuencia")
 
-knitr::kable(dtaL[1:6,], caption= "Subconjunto de los datos con formato largo de frecuencia")
+knitr::kable(dtaL[1:6,], caption= "Subconjunto de los datos 
+             con formato largo de frecuencia")
 
 ```
 
@@ -111,7 +113,8 @@ Usaremos nuestra matriz en formato ancho de frecuencia para colapsar los datos a
 
 dtaA <- aggregate(dtaT[,-(1:2)], list(par=dtaT$parcela), sum)
 
-knitr::kable(dtaA[,1:7], caption= "Subconjunto de los datos agregados a parcela")
+knitr::kable(dtaA[,1:6], caption= "Subconjunto de los datos agregados 
+             a parcela")
 
 ```
 
@@ -127,11 +130,47 @@ dtaA2 <- aggregate(dta[, c("area.basal","dap.a", "no.fustes")],
                         especie=dta$especie),
                    sum)
 
-knitr::kable(dtaA2[1:7,], caption= "Subconjunto de los datos agregados a parcela/subparcela/especie")
+knitr::kable(dtaA2[1:7,], caption= "Subconjunto de los datos agregados 
+             a parcela/subparcela/especie")
 
 ```
 
 Lo que en este ejemplo hemos hecho es colapsar los datos de área basal, dap y número de fustes a nivel de especies, por subparcela y por parcela. Hemos usado la función _sum_ para colapsar los datos. El cambio implica que antes tenía los datos a nivel de individuo y ahora los tengo a nivel de especie.
+
+Aunque este procedimiento puede servir en muchas casos, cabe la posibilidad que queremos que la función de agregación no sea una sino varias. Vamos a ver como podemos hacer esto.
+
+```{r, message=FALSE}
+##Creamos una función que contenga varias funciones de resumen
+
+funvar<- function(v){
+  c(mean=mean(v, na.rm = T),
+    range= max(v, na.rm = T)-min(v, na.rm = T),
+    sd=sd(v, na.rm = T)
+    )
+}
+
+#Ahora usamos la función aggregate
+dtaA3 <- data.frame(aggregate(dta[ c("area.basal","dap.a", "no.fustes")], 
+                   list(par=dta$parcela, 
+                        especie=dta$especie),
+                   FUN= funvar))
+
+#Nos arroja una lista como resultado
+mode(dtaA3)
+##Transformamos a dta.frame
+dtaA3c <- cbind.data.frame(dtaA3$especie, dtaA3$area.basal,
+                          dtaA3$dap.a,dtaA3$no.fustes)
+#ponemos los nombres de las variables
+colnames(dtaA3c) <- c(names(dtaA3)[2],                
+                paste(rep(names(dtaA3)[-(1:2)],each=3),
+                      colnames(dtaA3$area.basal), sep="."))
+
+knitr::kable(dtaA3c[1:5,1:5], caption= "Subconjunto de los datos 
+             agregados a parcela/especie con varias funciones de agregación")
+
+```
+
+
 
 #Ejercicios
 

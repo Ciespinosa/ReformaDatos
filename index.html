@@ -289,8 +289,6 @@ $(document).ready(function () {
 <th align="right">Bursera.graveolens</th>
 <th align="right">Caesalpinia.glabrata</th>
 <th align="right">Ceiba.trichistandra</th>
-<th align="right">Chloroleucon.mangense</th>
-<th align="right">Coccoloba.ruiziana</th>
 </tr>
 </thead>
 <tbody>
@@ -300,16 +298,12 @@ $(document).ready(function () {
 <td align="right">5</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">B</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -318,16 +312,12 @@ $(document).ready(function () {
 <td align="right">3</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">3</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">D</td>
 <td align="right">0</td>
 <td align="right">5</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -336,13 +326,9 @@ $(document).ready(function () {
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">F</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -354,15 +340,11 @@ $(document).ready(function () {
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">H</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
@@ -372,8 +354,6 @@ $(document).ready(function () {
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">J</td>
@@ -381,8 +361,6 @@ $(document).ready(function () {
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
 </tr>
 </tbody>
 </table>
@@ -399,7 +377,8 @@ $(document).ready(function () {
 dta &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;REA.datos.xlsx&quot;</span>)</code></pre></div>
 <p>Cargamos los datos, estos datos corresponden a una parcela permanente de bosque seco. Puede revisar la estructura de esta matriz de datos. Ahora bien, queremos transformar estos datos a datos con formato ancho, manteniendo las variables de diseño (parcela y subparcela) y tener como variables a las diferentes especies.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dtaT &lt;-<span class="st"> </span><span class="kw">dcast</span>(dta, parcela+subparcela~especie)
-knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class="dv">10</span>,<span class="dv">1</span>:<span class="dv">7</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos con formato ancho de frecuencia&quot;</span>)</code></pre></div>
+knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class="dv">10</span>,<span class="dv">1</span>:<span class="dv">5</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos </span>
+<span class="st">             con formato ancho de frecuencia&quot;</span>)</code></pre></div>
 <table>
 <caption>Subconjunto de los datos con formato ancho de frecuencia</caption>
 <thead>
@@ -409,8 +388,6 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <th align="right">Achatocarpus.pubescens</th>
 <th align="right">Armatocereus.sp</th>
 <th align="right">Aster.desconocida</th>
-<th align="right">Bursera.graveolens</th>
-<th align="right">Byttneria.flexuosa</th>
 </tr>
 </thead>
 <tbody>
@@ -420,16 +397,12 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">5</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">B</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -438,16 +411,12 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">3</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">D</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">5</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -456,14 +425,10 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">F</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -474,16 +439,12 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <td align="right">0</td>
 <td align="right">2</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">H</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -492,14 +453,10 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">J</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -509,7 +466,8 @@ knitr::<span class="kw">kable</span>(dtaT[<span class="dv">1</span>:<span class=
 <p>Como vemos ahora tenemos las variables de diseño frente a las variables especie, como datos aparece la frecuencia en la que cada especie aparece en la subparcela, puede ver la matriz completa usando la función <strong>view(dtaT)</strong></p>
 <p>Bien ahora es posible que me interese medir la ocurrencia de las especies como un valor de biomasa, puesto que tengo un valor de área basal usaré esta medida como indicador de biomasa.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dtaTab &lt;-<span class="st"> </span><span class="kw">dcast</span>(dta, parcela+subparcela~especie, <span class="dt">value.var =</span> <span class="st">&quot;area.basal&quot;</span>, <span class="dt">fun.aggregate =</span> sum)
-knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span class="dv">10</span>,<span class="dv">1</span>:<span class="dv">7</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos con formato ancho de biomasa&quot;</span>)</code></pre></div>
+knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span class="dv">10</span>,<span class="dv">1</span>:<span class="dv">5</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos </span>
+<span class="st">             con formato ancho de biomasa&quot;</span>)</code></pre></div>
 <table>
 <caption>Subconjunto de los datos con formato ancho de biomasa</caption>
 <thead>
@@ -519,8 +477,6 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
 <th align="right">Achatocarpus.pubescens</th>
 <th align="right">Armatocereus.sp</th>
 <th align="right">Aster.desconocida</th>
-<th align="right">Bursera.graveolens</th>
-<th align="right">Byttneria.flexuosa</th>
 </tr>
 </thead>
 <tbody>
@@ -530,16 +486,12 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
 <td align="right">0</td>
 <td align="right">0.00000</td>
 <td align="right">0</td>
-<td align="right">1994.3425</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">B</td>
 <td align="right">0</td>
 <td align="right">0.00000</td>
-<td align="right">0</td>
-<td align="right">584.2800</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -548,16 +500,12 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
 <td align="right">0</td>
 <td align="right">0.00000</td>
 <td align="right">0</td>
-<td align="right">863.9502</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">D</td>
 <td align="right">0</td>
 <td align="right">0.00000</td>
-<td align="right">0</td>
-<td align="right">2269.8047</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -566,16 +514,12 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
 <td align="right">0</td>
 <td align="right">0.00000</td>
 <td align="right">0</td>
-<td align="right">646.0106</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">F</td>
 <td align="right">0</td>
 <td align="right">0.00000</td>
-<td align="right">0</td>
-<td align="right">0.0000</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -584,16 +528,12 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
 <td align="right">0</td>
 <td align="right">47.63348</td>
 <td align="right">0</td>
-<td align="right">0.0000</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">H</td>
 <td align="right">0</td>
 <td align="right">0.00000</td>
-<td align="right">0</td>
-<td align="right">980.4739</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
@@ -602,16 +542,12 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
 <td align="right">0</td>
 <td align="right">0.00000</td>
 <td align="right">0</td>
-<td align="right">0.0000</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">S1</td>
 <td align="left">J</td>
 <td align="right">0</td>
 <td align="right">0.00000</td>
-<td align="right">0</td>
-<td align="right">0.0000</td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -625,7 +561,8 @@ knitr::<span class="kw">kable</span>(dtaTab[<span class="dv">1</span>:<span clas
              <span class="dt">variable.name =</span> <span class="st">&quot;especie&quot;</span>,
              <span class="dt">value.name =</span><span class="st">&quot;frecuencia&quot;</span>)
 
-knitr::<span class="kw">kable</span>(dtaL[<span class="dv">1</span>:<span class="dv">6</span>,], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos con formato largo de frecuencia&quot;</span>)</code></pre></div>
+knitr::<span class="kw">kable</span>(dtaL[<span class="dv">1</span>:<span class="dv">6</span>,], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos </span>
+<span class="st">             con formato largo de frecuencia&quot;</span>)</code></pre></div>
 <table>
 <caption>Subconjunto de los datos con formato largo de frecuencia</caption>
 <thead>
@@ -683,7 +620,8 @@ knitr::<span class="kw">kable</span>(dtaL[<span class="dv">1</span>:<span class=
 <p>Usaremos nuestra matriz en formato ancho de frecuencia para colapsar los datos a nivel de parcela.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dtaA &lt;-<span class="st"> </span><span class="kw">aggregate</span>(dtaT[,-(<span class="dv">1</span>:<span class="dv">2</span>)], <span class="kw">list</span>(<span class="dt">par=</span>dtaT$parcela), sum)
 
-knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class="dv">7</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos agregados a parcela&quot;</span>)</code></pre></div>
+knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class="dv">6</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos agregados </span>
+<span class="st">             a parcela&quot;</span>)</code></pre></div>
 <table>
 <caption>Subconjunto de los datos agregados a parcela</caption>
 <thead>
@@ -694,7 +632,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <th align="right">Aster.desconocida</th>
 <th align="right">Bursera.graveolens</th>
 <th align="right">Byttneria.flexuosa</th>
-<th align="right">Caesalpinia.glabrata</th>
 </tr>
 </thead>
 <tbody>
@@ -705,7 +642,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">18</td>
 <td align="right">0</td>
-<td align="right">6</td>
 </tr>
 <tr class="even">
 <td align="left">S2</td>
@@ -714,7 +650,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">8</td>
 <td align="right">2</td>
-<td align="right">22</td>
 </tr>
 <tr class="odd">
 <td align="left">S3</td>
@@ -723,7 +658,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">12</td>
 <td align="right">0</td>
-<td align="right">57</td>
 </tr>
 <tr class="even">
 <td align="left">S4</td>
@@ -732,7 +666,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">12</td>
 <td align="right">1</td>
-<td align="right">16</td>
 </tr>
 <tr class="odd">
 <td align="left">S5</td>
@@ -741,7 +674,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">13</td>
 <td align="right">0</td>
-<td align="right">7</td>
 </tr>
 <tr class="even">
 <td align="left">S6</td>
@@ -750,7 +682,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">2</td>
 <td align="right">23</td>
 <td align="right">0</td>
-<td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">S7</td>
@@ -759,7 +690,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">14</td>
 <td align="right">0</td>
-<td align="right">35</td>
 </tr>
 <tr class="even">
 <td align="left">S8</td>
@@ -768,7 +698,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">5</td>
 <td align="right">0</td>
-<td align="right">27</td>
 </tr>
 <tr class="odd">
 <td align="left">S9</td>
@@ -777,7 +706,6 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
 <td align="right">0</td>
 <td align="right">8</td>
 <td align="right">0</td>
-<td align="right">15</td>
 </tr>
 </tbody>
 </table>
@@ -789,7 +717,8 @@ knitr::<span class="kw">kable</span>(dtaA[,<span class="dv">1</span>:<span class
                         <span class="dt">especie=</span>dta$especie),
                    sum)
 
-knitr::<span class="kw">kable</span>(dtaA2[<span class="dv">1</span>:<span class="dv">7</span>,], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos agregados a parcela/subparcela/especie&quot;</span>)</code></pre></div>
+knitr::<span class="kw">kable</span>(dtaA2[<span class="dv">1</span>:<span class="dv">7</span>,], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos agregados </span>
+<span class="st">             a parcela/subparcela/especie&quot;</span>)</code></pre></div>
 <table>
 <caption>Subconjunto de los datos agregados a parcela/subparcela/especie</caption>
 <thead>
@@ -862,6 +791,84 @@ knitr::<span class="kw">kable</span>(dtaA2[<span class="dv">1</span>:<span class
 </tbody>
 </table>
 <p>Lo que en este ejemplo hemos hecho es colapsar los datos de área basal, dap y número de fustes a nivel de especies, por subparcela y por parcela. Hemos usado la función <em>sum</em> para colapsar los datos. El cambio implica que antes tenía los datos a nivel de individuo y ahora los tengo a nivel de especie.</p>
+<p>Aunque este procedimiento puede servir en muchas casos, cabe la posibilidad que queremos que la función de agregación no sea una sino varias. Vamos a ver como podemos hacer esto.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##Creamos una función que contenga varias funciones de resumen
+
+funvar&lt;-<span class="st"> </span>function(v){
+  <span class="kw">c</span>(<span class="dt">mean=</span><span class="kw">mean</span>(v, <span class="dt">na.rm =</span> T),
+    <span class="dt">range=</span> <span class="kw">max</span>(v, <span class="dt">na.rm =</span> T)-<span class="kw">min</span>(v, <span class="dt">na.rm =</span> T),
+    <span class="dt">sd=</span><span class="kw">sd</span>(v, <span class="dt">na.rm =</span> T)
+    )
+}
+
+<span class="co">#Ahora usamos la función aggregate</span>
+dtaA3 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">aggregate</span>(dta[ <span class="kw">c</span>(<span class="st">&quot;area.basal&quot;</span>,<span class="st">&quot;dap.a&quot;</span>, <span class="st">&quot;no.fustes&quot;</span>)], 
+                   <span class="kw">list</span>(<span class="dt">par=</span>dta$parcela, 
+                        <span class="dt">especie=</span>dta$especie),
+                   <span class="dt">FUN=</span> funvar))
+
+<span class="co">#Nos arroja una lista como resultado</span>
+<span class="kw">mode</span>(dtaA3)</code></pre></div>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##Transformamos a dta.frame
+dtaA3c &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(dtaA3$especie, dtaA3$area.basal,
+                          dtaA3$dap.a,dtaA3$no.fustes)
+<span class="co">#ponemos los nombres de las variables</span>
+<span class="kw">colnames</span>(dtaA3c) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">names</span>(dtaA3)[<span class="dv">2</span>],                
+                <span class="kw">paste</span>(<span class="kw">rep</span>(<span class="kw">names</span>(dtaA3)[-(<span class="dv">1</span>:<span class="dv">2</span>)],<span class="dt">each=</span><span class="dv">3</span>),
+                      <span class="kw">colnames</span>(dtaA3$area.basal), <span class="dt">sep=</span><span class="st">&quot;.&quot;</span>))
+
+knitr::<span class="kw">kable</span>(dtaA3c[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">5</span>], <span class="dt">caption=</span> <span class="st">&quot;Subconjunto de los datos </span>
+<span class="st">             agregados a parcela/especie con varias funciones de agregación&quot;</span>)</code></pre></div>
+<table>
+<caption>Subconjunto de los datos agregados a parcela/especie con varias funciones de agregación</caption>
+<thead>
+<tr class="header">
+<th align="left">especie</th>
+<th align="right">area.basal.mean</th>
+<th align="right">area.basal.range</th>
+<th align="right">area.basal.sd</th>
+<th align="right">dap.a.mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Achatocarpus.pubescens</td>
+<td align="right">27.98324</td>
+<td align="right">12.985450</td>
+<td align="right">3.647384</td>
+<td align="right">5.956888</td>
+</tr>
+<tr class="even">
+<td align="left">Achatocarpus.pubescens</td>
+<td align="right">37.92184</td>
+<td align="right">2.312521</td>
+<td align="right">1.635199</td>
+<td align="right">6.947824</td>
+</tr>
+<tr class="odd">
+<td align="left">Achatocarpus.pubescens</td>
+<td align="right">47.12016</td>
+<td align="right">87.046585</td>
+<td align="right">28.684197</td>
+<td align="right">7.459515</td>
+</tr>
+<tr class="even">
+<td align="left">Achatocarpus.pubescens</td>
+<td align="right">46.43758</td>
+<td align="right">76.458822</td>
+<td align="right">21.051361</td>
+<td align="right">7.505835</td>
+</tr>
+<tr class="odd">
+<td align="left">Achatocarpus.pubescens</td>
+<td align="right">92.41623</td>
+<td align="right">434.648123</td>
+<td align="right">138.232639</td>
+<td align="right">9.424807</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="ejercicios" class="section level1">
